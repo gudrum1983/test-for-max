@@ -259,7 +259,7 @@
             setTimeout(() => paused = false, 1200);
           }, 1000);
         } else if (time - lastTime > 16) {
-          frame.contentWindow.scrollBy(0, .7);
+          frame.contentWindow.scrollBy(0, 1.4);
           lastTime = time;
         }
       }
@@ -268,6 +268,13 @@
 
     frame.addEventListener("load", () => {
       const innerWindow = frame.contentWindow;
+      const scrollbarStyle = frame.contentDocument.createElement("style");
+      scrollbarStyle.textContent = `
+        html { scrollbar-width: none; }
+        body { -ms-overflow-style: none; }
+        ::-webkit-scrollbar { display: none; width: 0; height: 0; }
+      `;
+      frame.contentDocument.head.appendChild(scrollbarStyle);
       innerWindow.addEventListener("wheel", pauseTemporarily, { passive: true });
       innerWindow.addEventListener("touchstart", pauseTemporarily, { passive: true });
       requestAnimationFrame(autoScroll);
