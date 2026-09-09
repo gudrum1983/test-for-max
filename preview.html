@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Презентация мобильной версии фотоэссе «Вне фокуса».">
+  <title>Вне фокуса — мобильная презентация</title>
+  <style>
+    :root {
+      --cream: #eeeae0;
+      --ink: #161713;
+      --acid: #d8ff45;
+    }
+
+    * { box-sizing: border-box; }
+
+    html { background: var(--cream); }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 15% 20%, rgba(216, 255, 69, .48), transparent 25rem),
+        var(--cream);
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .page {
+      width: min(1500px, 100%);
+      min-height: 100vh;
+      margin: auto;
+      padding: clamp(24px, 4vw, 70px);
+      display: grid;
+      grid-template-columns: minmax(280px, .9fr) minmax(390px, 1.1fr);
+      align-items: center;
+      gap: clamp(40px, 8vw, 150px);
+      overflow: hidden;
+    }
+
+    .copy { max-width: 650px; }
+
+    .eyebrow {
+      margin: 0 0 clamp(34px, 7vh, 90px);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 11px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+    }
+
+    .eyebrow::before {
+      content: "";
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--ink);
+    }
+
+    h1 {
+      margin: 0 0 34px;
+      font: 400 clamp(62px, 8.2vw, 138px)/.82 Georgia, "Times New Roman", serif;
+      letter-spacing: -.07em;
+    }
+
+    .description {
+      max-width: 480px;
+      margin: 0;
+      font-size: clamp(17px, 1.45vw, 23px);
+      line-height: 1.45;
+    }
+
+    .hint {
+      width: fit-content;
+      margin-top: 48px;
+      padding: 11px 16px;
+      border: 1px solid currentColor;
+      border-radius: 999px;
+      font-size: 11px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .stage {
+      min-height: min(850px, calc(100vh - 60px));
+      display: grid;
+      place-items: center;
+      position: relative;
+    }
+
+    .stage::before {
+      content: "Mobile\A preview";
+      white-space: pre;
+      position: absolute;
+      right: -6%;
+      top: 7%;
+      color: rgba(22, 23, 19, .055);
+      font: 700 clamp(80px, 12vw, 180px)/.75 Arial, sans-serif;
+      letter-spacing: -.08em;
+      text-transform: uppercase;
+      transform: rotate(90deg) translateX(75%);
+      transform-origin: top right;
+    }
+
+    .phone {
+      width: min(390px, 80vw);
+      aspect-ratio: 390 / 844;
+      padding: 9px;
+      position: relative;
+      border: 2px solid #33342f;
+      border-radius: 55px;
+      background: #11120f;
+      box-shadow:
+        0 45px 70px rgba(43, 43, 30, .22),
+        0 8px 20px rgba(20, 20, 17, .18),
+        inset 0 0 0 1px #77786f;
+      transform: rotate(2.5deg);
+      transition: transform .55s cubic-bezier(.2,.8,.2,1);
+    }
+
+    .phone:hover { transform: rotate(0) translateY(-8px); }
+
+    .phone::before {
+      content: "";
+      width: 32%;
+      height: 29px;
+      position: absolute;
+      z-index: 3;
+      top: 17px;
+      left: 50%;
+      transform: translateX(-50%);
+      border-radius: 20px;
+      background: #0d0e0c;
+      pointer-events: none;
+    }
+
+    .screen {
+      width: 100%;
+      height: 100%;
+      position: relative;
+      overflow: hidden;
+      border-radius: 45px;
+      background: #f2f0e9;
+    }
+
+    iframe {
+      width: 100%;
+      height: 100%;
+      display: block;
+      border: 0;
+      background: #f2f0e9;
+    }
+
+    .side-button {
+      width: 3px;
+      height: 84px;
+      position: absolute;
+      top: 155px;
+      right: -5px;
+      border-radius: 0 3px 3px 0;
+      background: #33342f;
+    }
+
+    .caption {
+      position: absolute;
+      left: 0;
+      bottom: 4%;
+      font-size: 10px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      writing-mode: vertical-rl;
+      transform: rotate(180deg);
+    }
+
+    @media (max-width: 850px) {
+      .page {
+        grid-template-columns: 1fr;
+        padding-top: 48px;
+        text-align: center;
+      }
+
+      .copy { margin: auto; }
+      .eyebrow, .hint { margin-inline: auto; }
+      .eyebrow { margin-bottom: 35px; justify-content: center; }
+      .description { margin-inline: auto; }
+      .stage { min-height: auto; padding: 25px 0 70px; }
+      .caption { display: none; }
+    }
+
+    @media (max-width: 460px) {
+      .page { padding-inline: 14px; }
+      .phone { width: min(360px, 92vw); border-radius: 50px; }
+      .screen { border-radius: 41px; }
+      .hint { margin-top: 30px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .phone { transition: none; transform: none; }
+      .phone:hover { transform: none; }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="copy">
+      <p class="eyebrow">Мобильная версия / 2026</p>
+      <h1>История<br>в вашем<br>кармане</h1>
+      <p class="description">Фотоэссе адаптируется к небольшому экрану, сохраняя ритм, крупную типографику и движение изображений.</p>
+      <p class="hint">Прокрутите экран телефона</p>
+    </section>
+
+    <section class="stage" aria-label="Интерактивный макет смартфона">
+      <span class="caption">Интерактивный прототип</span>
+      <div class="phone">
+        <div class="screen">
+          <iframe src="index.html" title="Мобильная версия лонгрида «Вне фокуса»" loading="eager"></iframe>
+        </div>
+        <span class="side-button" aria-hidden="true"></span>
+      </div>
+    </section>
+  </main>
+</body>
+</html>
