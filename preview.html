@@ -87,6 +87,8 @@
       display: grid;
       place-items: center;
       position: relative;
+      perspective: 1400px;
+      perspective-origin: 48% 45%;
     }
 
     .stage::before {
@@ -115,11 +117,23 @@
         0 45px 70px rgba(43, 43, 30, .22),
         0 8px 20px rgba(20, 20, 17, .18),
         inset 0 0 0 1px #77786f;
-      transform: rotate(2.5deg);
+      transform: rotateY(-18deg) rotateX(5deg) rotateZ(2deg);
+      transform-style: preserve-3d;
       transition: transform .55s cubic-bezier(.2,.8,.2,1);
     }
 
-    .phone:hover { transform: rotate(0) translateY(-8px); }
+    .phone:hover { transform: rotateY(-9deg) rotateX(2deg) rotateZ(0) translateY(-8px); }
+
+    .phone::after {
+      content: "";
+      position: absolute;
+      inset: 16px -15px 16px 18px;
+      z-index: -1;
+      border-radius: 48px;
+      background: #050604;
+      transform: translateZ(-22px);
+      box-shadow: 30px 42px 55px rgba(35, 35, 25, .22);
+    }
 
     .phone::before {
       content: "";
@@ -220,5 +234,45 @@
       </div>
     </section>
   </main>
+  <script>
+    const frame = document.querySelector("iframe");
+    const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)");
+    let paused = false;
+    let restartTimer;
+    let lastTime = 0;
+
+    function pauseTemporarily() {
+      paused = true;
+      clearTimeout(restartTimer);
+      restartTimer = setTimeout(() => paused = false, 2200);
+    }
+
+    function autoScroll(time) {
+      if (!reduceMotion.matches && !paused && frame.contentWindow) {
+        const page = frame.contentDocument.documentElement;
+        const maxScroll = page.scrollHeight - frame.clientHeight;
+
+        if (frame.contentWindow.scrollY >= maxScroll - 2) {
+          paused = true;
+          setTimeout(() => {
+            frame.contentWindow.scrollTo({ top: 0, behavior: "smooth" });
+            setTimeout(() => paused = false, 1200);
+          }, 1000);
+        } else if (time - lastTime > 16) {
+          frame.contentWindow.scrollBy(0, .7);
+          lastTime = time;
+        }
+      }
+      requestAnimationFrame(autoScroll);
+    }
+
+    frame.addEventListener("load", () => {
+      const innerWindow = frame.contentWindow;
+      innerWindow.addEventListener("wheel", pauseTemporarily, { passive: true });
+      innerWindow.addEventListener("touchstart", pauseTemporarily, { passive: true });
+      requestAnimationFrame(autoScroll);
+    });
+
+  </script>
 </body>
 </html>
